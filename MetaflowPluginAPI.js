@@ -41,6 +41,10 @@ const Metaflow = {
   },
   //
   // Register application
+  // Supported slots
+  // - task-details : Renders to task page, task details section.
+  // - run-header   : Renders to run header as new collapsable item.
+  // - headless     : Does not render to visible content but can send and listen events.
   //
   register(slot, onReady) {
     onReadyFn = onReady;
