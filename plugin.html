@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plugin example</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .row {
+      display: flex;
+      padding-bottom: 15px;
+    }
+
+    .row > div:first-child {
+      flex: 0 0 150px;
+    }
+
+    .row > div:nth-child(2) {
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <div class="row">
+      <div>appinfo</div>
+      <div id="appinfo"></div>
+    </div>
+    <div class="row">
+      <div>location</div>
+      <div id="location"></div>
+    </div>
+    <div class="row">
+      <div>task</div>
+      <div id="task"></div>
+    </div>
+    <div class="row">
+      <div>metadata</div>
+      <div id="metadata"></div>
+    </div>
+  </div>
+
+  <script src="./MetaflowPluginAPI.js"></script>
+  <script>
+    (function () {
+      // Register plugin to certain slot in application
+      // This can be task-details or something else
+      Metaflow.register('task-details', () => {
+        // Subscribe to various resources. When ever these resources changes, we get message to onUpdate handler
+        Metaflow.subscribe(['appinfo', 'location', 'task', 'metadata'], (message) => {
+          switch (message.path) {
+            case 'appinfo':
+              updateElement('appinfo', message.data);
+              break;
+            case 'location':
+              updateElement('location', message.data);
+              break;
+            case 'task':
+              updateElement('task', message.data);
+              break;
+            case 'metadata':
+              updateElement('metadata', message.data);
+              break;
+          }
+        });
+      });
+
+
+      function updateElement(id, data) {
+        document.getElementById(id).innerHTML = JSON.stringify(data);
+        Metaflow.setHeight();
+      }
+
+    })();
+  </script>
+</body>
+
+</html>
