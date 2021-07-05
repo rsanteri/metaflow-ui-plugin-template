@@ -1,13 +1,17 @@
 // fn
 const Listeners = [];
 const EventListeners = [];
+let initialised = false;
 let onReadyFn = () => null
 
 function messageHandler(event) {
   if (event.data && event.data.type) {
     switch (event.data.type) {
       case 'ReadyToRender': {
-        onReadyFn();
+        if (!initialised) {
+          onReadyFn();
+          initialised = true;
+        }
         return;
       }
       case 'DataUpdate': {
@@ -41,10 +45,6 @@ const Metaflow = {
   },
   //
   // Register application
-  // Supported slots
-  // - task-details : Renders to task page, task details section.
-  // - run-header   : Renders to run header as new collapsable item.
-  // - headless     : Does not render to visible content but can send and listen events.
   //
   register(slot, onReady) {
     onReadyFn = onReady;
