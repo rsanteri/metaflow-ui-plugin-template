@@ -1,4 +1,8 @@
-// fn
+const VERSION_INFO = {
+  api: 1
+}
+
+
 const Listeners = [];
 const EventListeners = [];
 let initialised = false;
@@ -48,7 +52,7 @@ const Metaflow = {
   //
   register(slot, onReady) {
     onReadyFn = onReady;
-    window.parent.postMessage({ name: window.name, type: 'PluginRegisterEvent', slot: slot }, '*')
+    window.parent.postMessage({ name: window.name, type: 'PluginRegisterEvent', slot: slot, version: VERSION_INFO }, '*')
     window.addEventListener('message', messageHandler);
   },
   //
