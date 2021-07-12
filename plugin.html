@@ -12,16 +12,17 @@
       margin: 0;
       padding: 0;
     }
+
     .row {
       display: flex;
       padding-bottom: 15px;
     }
 
-    .row > div:first-child {
+    .row>div:first-child {
       flex: 0 0 150px;
     }
 
-    .row > div:nth-child(2) {
+    .row>div:nth-child(2) {
       white-space: pre-wrap;
       word-break: break-all;
     }
@@ -53,7 +54,8 @@
     (function () {
       // Register plugin to certain slot in application
       // This can be task-details or something else
-      Metaflow.register('task-details', () => {
+      Metaflow.register('task-details', (config) => {
+        console.log(config)
         // Subscribe to various resources. When ever these resources changes, we get message to onUpdate handler
         Metaflow.subscribe(['appinfo', 'location', 'task', 'metadata'], (message) => {
           switch (message.path) {

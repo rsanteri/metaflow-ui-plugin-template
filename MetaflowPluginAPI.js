@@ -13,7 +13,7 @@ function messageHandler(event) {
     switch (event.data.type) {
       case 'ReadyToRender': {
         if (!initialised) {
-          onReadyFn();
+          onReadyFn(event.data.config);
           initialised = true;
         }
         return;
@@ -51,7 +51,19 @@ const Metaflow = {
   /**
    * Register application to be rendered in app.
    * @param {("headless"|"run-header"|"task-details")} slot 
-   * @param {(manifest: PluginManifest) => void} onReady 
+   * @param {(manifest: {
+  name: string;
+  repository: string | null;
+  ref: string | null;
+  parameters: Record<string, string>;
+  config: {
+    name: string;
+    version: string;
+    entrypoint: string;
+  };
+  identifier: string;
+  files: string[];
+}) => void} onReady 
    */
   register(slot, onReady) {
     onReadyFn = onReady;
