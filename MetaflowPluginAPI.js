@@ -76,6 +76,13 @@ const Metaflow = {
     window.parent.postMessage({ name: window.name, type: 'PluginCallEvent', event: event, data: data }, '*')
   },
   //
+  // Send notification
+  // @param {string | {type: string, message: string}} message
+  //
+  sendNotification(message) {
+    window.parent.postMessage({ name: window.name, type: 'PluginCallEvent', event: 'SEND_NOTIFICATION', data: message }, '*')
+  },
+  //
   // Request to be removed?
   //
   remove(fn) {
